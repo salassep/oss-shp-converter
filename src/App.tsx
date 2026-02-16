@@ -102,13 +102,29 @@ export default function App() {
   }
 
   return (
-    <div style={{ fontFamily: "ui-sans-serif, system-ui", padding: 20, maxWidth: 1150, margin: "0 auto" }}>
-      <h1 style={{ margin: 0 }}>Shapefile Zip Inspector (Client-side)</h1>
-      <p style={{ color: "#444" }}>
-        Upload a <b>.zip</b> containing <code>.shp/.shx/.dbf</code> (and ideally <code>.prj</code>). Everything runs in your browser.
+    <div className="font-sans p-5 mx-auto my-0 max-w-287.5">
+      <h1 className="m-0 font-bold text-xl">OSS SHP Converter</h1>
+      <p className="mt-2">
+        Tool ini digunakan untuk menginspeksi dan mengkonversi SHP Polygon sesuai
+        dengan luasan yang kamu mau. Sistem akan menyesuaikannya dengan sistem koordinat dan 
+        proyeksi yang digunakan oleh OSS dengan membesarkan atau mengecilkan polygon
+        secara merata dari tengah sehingga bentuknya tetap sama.
       </p>
-
-      <div
+      <p className="mt-2">
+        <span className="font-semibold">Note</span>: Tool ini bertujuan menyesuaikan luasan SHP 
+        polygon agar akurat dan sesuai dengan perhitungan sistem OSS, karena terkadang terjadi 
+        selisih beberapa meter saat diunggah. Tidak disarankan jika selisih luasan 
+        terlalu besar. Selalu periksa kembali file polygon sebelum diunggah ke OSS. 
+        Segala kekeliruan menjadi tanggung jawab kamu sepenuhnya.
+      </p>
+      <div className="mt-2">
+        <h2 className="font-semibold">Bagaimana cara menggunakannya?</h2>
+        <p className="text-[#444]">
+          Unggah file <b>.zip</b> yang didalamnya terdapat file <code>.shp/.shx/.dbf</code> (disarankan ada <code>.prj</code>).
+          Jika ingin mengkonversi silahkan masukkan luasan lalu klik tombol konversi.
+        </p>
+      </div>
+      <div className="mt-4"
         style={{
           border: "1px solid #ddd",
           borderRadius: 12,
