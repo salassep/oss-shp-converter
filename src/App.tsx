@@ -1,11 +1,13 @@
-import React, { useMemo, useState } from "react";
+import "./index.css";
+import { useMemo, useState } from "react";
 import JSZip from "jszip";
 import shp from "shpjs";
 import proj4 from "proj4";
-import wktParser from "wkt-parser";
 import * as turf from "@turf/turf";
 import shpwrite from "@mapbox/shp-write";
-import "./index.css";
+
+// @ts-expect-error wkt-parser don't have ts module
+import wktParser from "wkt-parser";
 
 
 // Ensure proj4 knows these EPSG defs (safe even if already present)
@@ -424,7 +426,6 @@ async function downloadConvertedShpZip(fc: GeoJSON.FeatureCollection, baseName: 
     prj: WGS84_PRJ_WKT,
     types: {
       polygon: baseName,
-      polyline: baseName,
       point: baseName,
     },
   }) as any;
