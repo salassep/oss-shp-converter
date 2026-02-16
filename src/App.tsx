@@ -426,6 +426,7 @@ async function downloadConvertedShpZip(fc: GeoJSON.FeatureCollection, baseName: 
     prj: WGS84_PRJ_WKT,
     types: {
       polygon: baseName,
+      // polyline: baseName,
       point: baseName,
     },
   }) as any;
