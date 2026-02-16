@@ -5,6 +5,8 @@ import proj4 from "proj4";
 import wktParser from "wkt-parser";
 import * as turf from "@turf/turf";
 import shpwrite from "@mapbox/shp-write";
+import "./index.css";
+
 
 // Ensure proj4 knows these EPSG defs (safe even if already present)
 proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs +type=crs");
