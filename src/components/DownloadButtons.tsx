@@ -1,23 +1,20 @@
 import { downloadText, downloadConvertedShpZip } from "../lib/downloads";
 import type { InspectResult } from "../types/gis";
 
-export function TopBar({ busy, result }: { busy: boolean; result: InspectResult | null }) {
+export function DownloadButtons({ 
+  busy, 
+  result,
+  isAlreadyConverted 
+}: { 
+  busy: boolean; 
+  result: InspectResult | null;
+  isAlreadyConverted: boolean
+}) {
   return (
-    <div
-      style={{
-        border: "1px solid #ddd",
-        borderRadius: 12,
-        padding: 16,
-        background: "#fafafa",
-        display: "flex",
-        gap: 12,
-        alignItems: "center",
-        justifyContent: "space-between",
-        flexWrap: "wrap",
-      }}
-    >
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+    <div className="mt-3.5 border border-gray-300 rounded-xl p-4 bg-gray-50">
+      <div className="flex flex-wrap gap-2">
         <button
+          className="px-3 py-2 flex-1 rounded-lg border border-blue-300 text-sm font-semibold text-blue-600 hover:bg-blue-100 hover:border-blue-400 transition cursor-pointer"
           disabled={!result}
           onClick={() => {
             if (!result) return;
@@ -28,6 +25,7 @@ export function TopBar({ busy, result }: { busy: boolean; result: InspectResult 
         </button>
 
         <button
+          className="px-3 py-2 flex-1 rounded-lg border border-blue-300 text-sm font-semibold text-blue-600 hover:bg-blue-100 hover:border-blue-400 transition cursor-pointer"
           disabled={!result?.prjText}
           onClick={() => {
             if (!result?.prjText) return;
@@ -36,8 +34,11 @@ export function TopBar({ busy, result }: { busy: boolean; result: InspectResult 
         >
           Download .prj (WKT)
         </button>
+      </div>
 
+      <div className="flex flex-wrap gap-2 mt-2">
         <button
+          className="flex-1 px-3 py-2 rounded-lg border border-blue-300 text-sm font-semibold text-blue-600 hover:bg-blue-100 hover:border-blue-400 transition cursor-pointer"
           disabled={!result}
           onClick={() => {
             if (!result) return;
@@ -49,16 +50,18 @@ export function TopBar({ busy, result }: { busy: boolean; result: InspectResult 
         </button>
 
         <button
-          disabled={!result || busy}
+          className="flex-1 px-3 py-2 rounded-lg border border-blue-300 text-sm font-semibold text-blue-600 hover:bg-blue-100 hover:border-blue-400 transition cursor-pointer disabled:border-gray-400 disabled:text-gray-400 disabled:cursor-default disabled:hover:bg-gray-50"
+          disabled={!result || busy || !isAlreadyConverted}
           onClick={() => {
             if (!result) return;
             const baseName = result.fileName.replace(/\.zip$/i, "") + "_converted";
             downloadConvertedShpZip(result.geojson, baseName);
           }}
         >
-          Download Converted SHP (ZIP)
+          Download SHP Terkonversi (ZIP)
         </button>
       </div>
+
     </div>
   );
 }

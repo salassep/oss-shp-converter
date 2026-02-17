@@ -5,6 +5,7 @@ export function AreaTool({
   busy,
   result,
   targetOssArea,
+  isAlreadyConverted,
   setTargetOssArea,
   onConvertAreaExact,
   onReset,
@@ -13,6 +14,7 @@ export function AreaTool({
   busy: boolean;
   result: InspectResult;
   targetOssArea: string;
+  isAlreadyConverted: boolean;
   setTargetOssArea: (v: string) => void;
   onConvertAreaExact: () => void;
   onReset: () => void;
@@ -43,7 +45,7 @@ export function AreaTool({
           placeholder={`e.g. ${fmt(result.totalAreaOssSqM, 2)}`}
         />
         <button 
-          className="px-3 py-2 rounded-lg border border-blue-300 text-sm font-semibold text-blue-600 hover:bg-blue-100 hover:border-blue-400 transition"
+          className="px-3 py-2 rounded-lg border cursor-pointer border-blue-300 text-sm font-semibold text-blue-600 hover:bg-blue-100 hover:border-blue-400 transition"
           onClick={onConvertAreaExact} 
           disabled={busy}
         >
@@ -51,9 +53,9 @@ export function AreaTool({
         </button>
 
         <button 
-          className="px-3 py-2 text-sm font-semibold cursor-pointer border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition"
+          className="px-3 py-2 text-sm font-semibold cursor-pointer border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition disabled:border-gray-400 disabled:text-gray-400 disabled:cursor-default disabled:hover:bg-white"
           onClick={onReset} 
-          disabled={!canReset || busy}
+          disabled={!canReset || busy || !isAlreadyConverted}
         >
           Reset
         </button>

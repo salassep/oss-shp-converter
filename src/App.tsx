@@ -14,11 +14,13 @@ import { GeoJsonPreview } from "./components/GeoJsonPreview";
 import { Warning } from "./components/Warning";
 import { HowToUse } from "./components/HowToUse";
 import { Footer } from "./components/Footer";
+import { DownloadButtons } from "./components/DownloadButtons";
 
 ensureProjDefs();
 
 export default function App() {
   const [busy, setBusy] = useState(false);
+  const [isConverted, setIsConverted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [result, setResult] = useState<InspectResult | null>(null);
@@ -81,6 +83,7 @@ export default function App() {
 
       const stats = buildStats(result.fileName, result.prjText, crs, result.epsgGuess, scaled);
       setResult(stats);
+      setIsConverted(true);
     } catch (e: any) {
       setError(e?.message || String(e));
     }
@@ -102,6 +105,7 @@ export default function App() {
       const stats = buildStats(result.fileName, result.prjText, crs, result.epsgGuess, resetGeojson);
       setTargetOssArea("");
       setResult(stats);
+      setIsConverted(false);
     } catch (e: any) {
       setError(e?.message || String(e));
     }
@@ -109,6 +113,7 @@ export default function App() {
 
   function onRemoveUploadedFile() {
     setBusy(false);
+    setIsConverted(false);
     setError(null);
     setResult(null);
     setOriginalGeojson(null);
@@ -167,6 +172,7 @@ export default function App() {
               busy={busy}
               result={result}
               targetOssArea={targetOssArea}
+              isAlreadyConverted={isConverted}
               setTargetOssArea={setTargetOssArea}
               onConvertAreaExact={onConvertAreaExact}
               onReset={onReset}
@@ -175,6 +181,7 @@ export default function App() {
 
             <StatsPanels result={result} />
             <GeoJsonPreview preview={geojsonPreview} />
+            <DownloadButtons isAlreadyConverted={isConverted} busy={busy} result={result} />
           </>
         )}
 
