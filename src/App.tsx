@@ -100,6 +100,7 @@ export default function App() {
       };
 
       const stats = buildStats(result.fileName, result.prjText, crs, result.epsgGuess, resetGeojson);
+      setTargetOssArea("");
       setResult(stats);
     } catch (e: any) {
       setError(e?.message || String(e));
@@ -142,7 +143,7 @@ export default function App() {
 
           {(result || error) && (
             <button 
-              className="px-3 py-1.5 text-sm font-semibold cursor-pointer border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition" 
+              className="px-3 py-2 text-sm font-semibold cursor-pointer border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition" 
               onClick={onRemoveUploadedFile}
             >
               Hapus
@@ -152,7 +153,7 @@ export default function App() {
           {/* <TopBar busy={busy} result={result} /> */}
         </div>
 
-        {busy && <p className="mt-3.5">Reading shapefile…</p>}
+        {busy && <p className="mt-3.5">Membaca shapefile…</p>}
 
         {error && (
           <div className="mt-3.5 p-3 rounded-lg bg-red-50 border border-red-200">

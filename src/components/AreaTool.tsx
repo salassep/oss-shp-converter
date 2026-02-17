@@ -19,49 +19,49 @@ export function AreaTool({
   canReset: boolean;
 }) {
   return (
-    <div
-      style={{
-        marginTop: 14,
-        border: "1px solid #ddd",
-        borderRadius: 12,
-        padding: 14,
-        background: "#ffffff",
-        display: "flex",
-        gap: 10,
-        alignItems: "center",
-        flexWrap: "wrap",
-      }}
-    >
-      <div style={{ minWidth: 320 }}>
-        <div style={{ fontWeight: 700, marginBottom: 6 }}>Adjust OSS Area (exact to 2 decimals, preserve shape)</div>
-        <div style={{ color: "#666", fontSize: 13 }}>
-          We scale in <b>EPSG:3857</b> and iterate until <code>round(area, 2)</code> exactly matches your input.
-        </div>
+    <div className="mt-3.5 border border-gray-300 rounded-xl p-3.5 bg-white">
+      <div>
+        <h2 className="font-bold mb-1.5">
+          Sesuaikan Luasan
+        </h2>
+        <p className="text-[#666] text-sm">
+          Sistem melakukan penskalaan dalam <b>EPSG:3857</b> dan melakukan iterasi hingga
+          2 angka di belakang koma persis sama dengan luas yang kamu masukkan.
+        </p>
       </div>
 
-      <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-        <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          Target OSS area (m²):
-          <input
-            value={targetOssArea}
-            onChange={(e) => setTargetOssArea(e.target.value)}
-            placeholder={`e.g. ${fmt(result.totalAreaOssSqM, 2)}`}
-            style={{ padding: "8px 10px", borderRadius: 10, border: "1px solid #ddd", width: 240 }}
-          />
+      <div className="my-2 flex gap-2 items-center flex-wrap">
+        <label htmlFor="targetOssArea">
+          Target luasan (m²):
         </label>
-
-        <button onClick={onConvertAreaExact} disabled={busy}>
-          Convert
+        <input
+          id="targetOssArea"
+          name="targetOssArea"
+          value={targetOssArea}
+          className="py-2 px-2.5 rounded-lg border border-gray-300 flex-1 text-sm"
+          onChange={(e) => setTargetOssArea(e.target.value)}
+          placeholder={`e.g. ${fmt(result.totalAreaOssSqM, 2)}`}
+        />
+        <button 
+          className="px-3 py-2 rounded-lg border border-blue-300 text-sm font-semibold text-blue-600 hover:bg-blue-100 hover:border-blue-400 transition"
+          onClick={onConvertAreaExact} 
+          disabled={busy}
+        >
+          Konversi
         </button>
 
-        <button onClick={onReset} disabled={!canReset || busy}>
+        <button 
+          className="px-3 py-2 text-sm font-semibold cursor-pointer border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition"
+          onClick={onReset} 
+          disabled={!canReset || busy}
+        >
           Reset
         </button>
       </div>
 
-      <div style={{ marginLeft: "auto", color: "#333", fontSize: 13 }}>
-        <b>Current OSS area:</b> {fmt(result.totalAreaOssSqM, 2)} m²{" "}
-        <span style={{ color: "#888" }}>|</span> <b>OSS bbox width:</b> {fmt(result.ossWidthMeters, 2)} m
+      <div className="text-right text-xs">
+        <span className="font-semibold">Luas di OSS sementara:</span> {fmt(result.totalAreaOssSqM, 2)} m²{" "}
+        <span style={{ color: "#888" }}>|</span> <span className="font-semibold">Lebar bbox OSS:</span> {fmt(result.ossWidthMeters, 2)} m
       </div>
     </div>
   );
