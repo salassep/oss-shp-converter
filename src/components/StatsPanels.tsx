@@ -3,52 +3,44 @@ import { fmt } from "../lib/utils";
 
 export function StatsPanels({ result }: { result: InspectResult }) {
   return (
-    <div style={{ marginTop: 18, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-      <div style={{ border: "1px solid #ddd", borderRadius: 12, padding: 14 }}>
-        <h2 style={{ marginTop: 0 }}>CRS / Projection</h2>
-        <div><b>File:</b> {result.fileName}</div>
-        <div><b>CRS type:</b> {result.crsType ?? "Unknown"}</div>
-        <div><b>Projection/CRS name:</b> {result.projectionName ?? "Unknown"}</div>
-        <div><b>Datum:</b> {result.datumName ?? "Unknown"}</div>
-        <div><b>Unit:</b> {result.unitName ?? "Unknown"}</div>
-        <div><b>EPSG (guess):</b> {result.epsgGuess ?? "Unknown"}</div>
+    <div className="mt-4.5 flex flex-row flex-wrap gap-3.5">
+      <div className="flex-1 min-w-3xs border border-[#ddd] rounded-xl p-3.5">
+        <h2 className="font-bold mb-1.5">
+          CRS / Proyeksi
+        </h2>
+        <div><span className="font-semibold">File:</span> {result.fileName}</div>
+        <div><span className="font-semibold">Jenis CRS:</span> {result.crsType ?? "Unknown"}</div>
+        <div><span className="font-semibold">Proyeksi/nama CRS:</span> {result.projectionName ?? "Unknown"}</div>
+        <div><span className="font-semibold">Datum:</span> {result.datumName ?? "Unknown"}</div>
+        <div><span className="font-semibold">Unit:</span> {result.unitName ?? "Unknown"}</div>
+        <div><span className="font-semibold">EPSG:</span> {result.epsgGuess ?? "Unknown"}</div>
 
-        <details style={{ marginTop: 10 }}>
-          <summary><b>.prj (WKT)</b> {result.prjText ? "" : "(not found in zip)"}</summary>
-          <pre style={{ whiteSpace: "pre-wrap", background: "#f5f5f5", padding: 10, borderRadius: 10, overflow: "auto" }}>
-            {result.prjText ?? "No .prj found in the zip. Add it for reliable projection info."}
+        <details className="mt-2.5">
+          <summary><b>.prj (WKT)</b> {result.prjText ? "" : "(tidak ditemukan di zip)"}</summary>
+          <pre className="whitespace-pre-wrap bg-gray-100 p-2.5 rounded-lg overflow-auto">
+            {result.prjText ?? "Tidak ada file .prj di zip. Tambahkan untuk info proyeksi yang akurat."}
           </pre>
         </details>
       </div>
 
-      <div style={{ border: "1px solid #ddd", borderRadius: 12, padding: 14 }}>
-        <h2 style={{ marginTop: 0 }}>Geometry & Stats</h2>
-        <div><b>Features:</b> {result.featureCount}</div>
-        <div><b>Geometry types:</b> {result.geometryTypes.join(", ") || "—"}</div>
+      <div className="flex-1 min-w-3xs border border-[#ddd] rounded-xl p-3.5">
+        <h2 className="font-bold mb-1.5">
+          Geometri & Stats
+        </h2>
+        <div><span className="font-semibold">Features:</span> {result.featureCount}</div>
+        <div><span className="font-semibold">Jenis Geometri:</span> {result.geometryTypes.join(", ") || "—"}</div>
 
-        <div style={{ marginTop: 8 }}><b>BBox (lon/lat):</b> [{result.bbox.map((x) => x.toFixed(6)).join(", ")}]</div>
-        <div><b>Width:</b> {result.widthDegrees.toFixed(6)}° (~{fmt(result.widthMeters, 2)} m)</div>
-        <div><b>Height:</b> {result.heightDegrees.toFixed(6)}° (~{fmt(result.heightMeters, 2)} m)</div>
+        <div className="mt-2"><span className="font-semibold">BBox (lon/lat):</span> [{result.bbox.map((x) => x.toFixed(6)).join(", ")}]</div>
+        <div><span className="font-semibold">Lebar:</span> {result.widthDegrees.toFixed(6)}° (~{fmt(result.widthMeters, 2)} m)</div>
+        <div><span className="font-semibold">Tinggi:</span> {result.heightDegrees.toFixed(6)}° (~{fmt(result.heightMeters, 2)} m)</div>
 
-        <div style={{ marginTop: 10 }}><b>Total area:</b> {fmt(result.totalAreaSqM, 2)} m²</div>
-        <div><b>Total area (OSS / EPSG:3857):</b> {fmt(result.totalAreaOssSqM, 2)} m²</div>
-        <div><b>Total perimeter:</b> {fmt(result.totalPerimeterM, 2)} m</div>
+        <div className="mt-2"><span className="font-semibold">Luas:</span> {fmt(result.totalAreaSqM, 2)} m²</div>
+        <div><span className="font-semibold">Luas (OSS / EPSG:3857):</span> {fmt(result.totalAreaOssSqM, 2)} m²</div>
+        <div><span className="font-semibold">Total perimeter:</span> {fmt(result.totalPerimeterM, 2)} m</div>
 
-        <details style={{ marginTop: 12 }}>
-          <summary><b>Point Coordinates (WGS84)</b> ({result.pointCoordinates.length})</summary>
-          <div
-            style={{
-              color: "black",
-              maxHeight: 300,
-              overflow: "auto",
-              marginTop: 8,
-              background: "#f5f5f5",
-              padding: 10,
-              borderRadius: 10,
-              fontFamily: "monospace",
-              fontSize: 13,
-            }}
-          >
+        <details className="mt-2">
+          <summary><b>Koordinat (WGS84)</b> ({result.pointCoordinates.length})</summary>
+          <div className="max-h-75 overflow-auto mt-2 bg-gray-100 p-2.5 rounded-lg font-mono text-[13px]">
             {result.pointCoordinates.map(([lon, lat], i) => (
               <div key={i}>
                 {i + 1}. {lon.toFixed(6)}, {lat.toFixed(6)}
@@ -57,11 +49,14 @@ export function StatsPanels({ result }: { result: InspectResult }) {
           </div>
         </details>
 
-        <details style={{ marginTop: 10 }}>
-          <summary><b>Attribute fields</b> ({result.fieldNames.length})</summary>
-          <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap: 8 }}>
+        <details className="mt-2">
+          <summary><b>Attribut</b> ({result.fieldNames.length})</summary>
+          <div className="mt-2 flex flex-wrap gap-2">
             {result.fieldNames.map((k) => (
-              <span key={k} style={{ padding: "4px 8px", border: "1px solid #ddd", borderRadius: 999, background: "#fafafa" }}>
+              <span 
+                key={k} 
+                className="py-1 px-2 border border-gray-300 rounded-full bg-gray-50"
+              >
                 {k}
               </span>
             ))}
