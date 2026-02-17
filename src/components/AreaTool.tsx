@@ -61,7 +61,7 @@ export function AreaTool({
 
       <div className="text-right text-xs">
         <span className="font-semibold">Luas di OSS sementara:</span> {fmt(result.totalAreaOssSqM, 2)} m²{" "}
-        <span style={{ color: "#888" }}>|</span> <span className="font-semibold">Lebar bbox OSS:</span> {fmt(result.ossWidthMeters, 2)} m
+        | <span className="font-semibold">Lebar bbox OSS:</span> {fmt(result.ossWidthMeters, 2)} m
       </div>
     </div>
   );
